@@ -1,7 +1,5 @@
 flask
 groq
-python-dotenvflask
-groq
 python-dotenv
 langchain
 langchain-community
