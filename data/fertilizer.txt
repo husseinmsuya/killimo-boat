@@ -1,0 +1,144 @@
+Mbolea: DAP
+
+Aina:
+- mbolea ya kupandia
+
+Virutubisho:
+- Nitrogen (N)
+- Phosphorus (P)
+
+Matumizi:
+- hutumika wakati wa kupanda
+- husaidia ukuaji wa mizizi
+- huongeza ukuaji wa mwanzo wa mmea
+
+Mazao Yanayofaa:
+- mahindi
+- mpunga
+- nyanya
+- vitunguu
+
+Kiasi:
+- fuata ushauri wa afisa kilimo au maelekezo ya kiwandani
+
+Tahadhari:
+- isiwekwe moja kwa moja kwenye mbegu
+- funika na udongo baada ya kuweka
+
+=========================
+
+Mbolea: UREA
+
+Aina:
+- mbolea ya kukuzia
+
+Virutubisho:
+- Nitrogen (N)
+
+Matumizi:
+- kuongeza ukuaji wa majani
+- kuongeza rangi ya kijani kwenye mimea
+
+Mazao Yanayofaa:
+- mahindi
+- mpunga
+- mboga
+
+Muda wa Matumizi:
+- wiki 3–4 baada ya kupanda
+- baada ya mvua au wakati wa unyevunyevu
+
+Tahadhari:
+- usiweke karibu sana na mmea
+- tumia kiwango kinachoshauriwa
+
+=========================
+
+Mbolea: NPK
+
+Aina:
+- mbolea ya mchanganyiko
+
+Virutubisho:
+- Nitrogen
+- Phosphorus
+- Potassium
+
+Matumizi:
+- kukuza mmea kwa ujumla
+- kuongeza maua na matunda
+
+Aina Maarufu:
+- NPK 17:17:17
+- NPK 20:10:10
+
+Mazao:
+- nyanya
+- pilipili
+- vitunguu
+- matunda
+
+=========================
+
+Mbolea: Samadi
+
+Chanzo:
+- ng'ombe
+- kuku
+- mbuzi
+
+Faida:
+- kuongeza rutuba ya udongo
+- kuhifadhi unyevunyevu
+- kuboresha muundo wa udongo
+
+Matumizi:
+- iwekwe kabla ya kupanda
+- ichanganywe vizuri na udongo
+
+Tahadhari:
+- samadi mbichi inaweza kuharibu mimea
+- tumia samadi iliyooza vizuri
+
+=========================
+
+Mbolea: CAN
+
+Jina Kamili:
+- Calcium Ammonium Nitrate
+
+Matumizi:
+- kuongeza ukuaji wa mimea
+- kukuzia mazao
+
+Mazao:
+- mahindi
+- mboga
+- vitunguu
+
+Faida:
+- hufanya kazi haraka
+- hupunguza asidi kwenye udongo ukilinganisha na UREA
+
+=========================
+
+Mbolea: Minjingu
+
+Aina:
+- phosphate fertilizer
+
+Chanzo:
+- madini ya Tanzania
+
+Matumizi:
+- kuongeza phosphorus kwenye udongo
+- kusaidia ukuaji wa mizizi
+
+Mazao:
+- mahindi
+- maharage
+- alizeti
+
+Faida:
+- gharama nafuu
+- inapatikana Tanzania

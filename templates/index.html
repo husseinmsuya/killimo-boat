@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kilimo Bot 🌾</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0d1a0e;
+  --surface:#122014;
+  --surface2:#1a2e1c;
+  --border:#2a3d2c;
+  --accent:#4caf50;
+  --accent2:#81c784;
+  --accent-dark:#2e7d32;
+  --text:#e8f5e9;
+  --text2:#a5d6a7;
+  --text3:#558b5a;
+  --user-bg:#1a3a1e;
+  --user-border:#2e5c32;
+  --radius:14px;
+  --radius-sm:9px;
+}
+
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;font-size:15px}
+
+/* Background subtle pattern */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(76,175,80,.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(129,199,132,.04) 0%, transparent 50%);
+  pointer-events:none;z-index:0
+}
+
+#app{
+  display:flex;flex-direction:column;
+  height:100vh;position:relative;z-index:1;
+  max-width:760px;margin:0 auto;
+  background:rgba(18,32,20,.95);
+  border-left:1px solid var(--border);
+  border-right:1px solid var(--border);
+}
+
+/* ── HEADER ── */
+header{
+  padding:14px 20px;
+  background:#0f1f10;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:14px;
+}
+.logo{
+  width:44px;height:44px;border-radius:12px;
+  background:linear-gradient(135deg,#2e7d32,#66bb6a);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;flex-shrink:0;
+}
+.header-text h1{font-size:17px;font-weight:700;color:var(--text);letter-spacing:-.01em}
+.header-text p{font-size:12px;color:var(--text3);margin-top:2px}
+.online{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:11px;color:#4caf50;
+}
+.online::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:#4caf50;box-shadow:0 0 5px #4caf50;
+}
+.header-right{margin-left:auto;display:flex;gap:8px}
+.hdr-btn{
+  padding:6px 12px;font-size:12px;
+  background:transparent;border:1px solid var(--border);
+  border-radius:var(--radius-sm);color:var(--text3);
+  cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px
+}
+.hdr-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── QUICK TOPICS ── */
+#topics{
+  padding:10px 16px;
+  border-bottom:1px solid var(--border);
+  display:flex;gap:7px;overflow-x:auto;
+  background:#0f1f10;
+}
+#topics::-webkit-scrollbar{display:none}
+.topic-chip{
+  white-space:nowrap;padding:5px 12px;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:20px;font-size:12px;color:var(--text2);
+  cursor:pointer;flex-shrink:0;transition:all .15s;
+}
+.topic-chip:hover{background:var(--accent-dark);border-color:var(--accent);color:#fff}
+
+/* ── MESSAGES ── */
+#messages{
+  flex:1;overflow-y:auto;
+  padding:20px 16px;
+  display:flex;flex-direction:column;gap:16px;
+}
+#messages::-webkit-scrollbar{width:3px}
+#messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+/* Welcome */
+#welcome{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;flex:1;
+  gap:14px;text-align:center;padding:32px 20px;
+  animation:fadeUp .5s ease both
+}
+.welcome-icon{font-size:52px;line-height:1}
+#welcome h2{font-size:20px;font-weight:700;color:var(--text)}
+#welcome p{font-size:14px;color:var(--text3);line-height:1.6;max-width:360px}
+.suggest-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:8px;width:100%;max-width:440px;margin-top:8px
+}
+.sug{
+  padding:10px 12px;text-align:left;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);color:var(--text2);
+  font-size:12.5px;line-height:1.4;cursor:pointer;
+  transition:all .15s
+}
+.sug:hover{background:var(--accent-dark);border-color:var(--accent);color:#fff}
+.sug span{display:block;font-size:16px;margin-bottom:4px}
+
+/* Bubbles */
+.msg-row{display:flex;gap:10px;align-items:flex-start;animation:fadeUp .25s ease both}
+.msg-row.user{flex-direction:row-reverse}
+.avatar{
+  width:33px;height:33px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;flex-shrink:0;margin-top:2px
+}
+.avatar.ai{background:linear-gradient(135deg,#2e7d32,#66bb6a)}
+.avatar.user{background:var(--surface2);border:1px solid var(--border)}
+.bubble{
+  max-width:74%;padding:11px 15px;
+  border-radius:var(--radius);
+  font-size:14px;line-height:1.65;
+}
+.bubble.ai{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-top-left-radius:4px;color:var(--text)
+}
+.bubble.user{
+  background:var(--user-bg);
+  border:1px solid var(--user-border);
+  border-top-right-radius:4px;color:#c8e6c9
+}
+.bubble strong{color:var(--accent2)}
+.bubble em{color:var(--text3)}
+.bubble .step{
+  display:flex;gap:8px;margin:4px 0;padding:6px 10px;
+  background:rgba(76,175,80,.07);border-left:2px solid var(--accent);
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:13px;
+}
+
+/* Typing */
+.typing{display:flex;gap:5px;padding:5px 2px}
+.typing span{
+  width:7px;height:7px;border-radius:50%;background:var(--accent);
+  animation:blink 1s ease-in-out infinite;
+}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+
+/* ── INPUT ── */
+#input-area{
+  padding:12px 16px 18px;
+  border-top:1px solid var(--border);
+  background:#0f1f10;
+}
+#input-wrap{
+  display:flex;align-items:flex-end;gap:10px;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:10px 10px 10px 15px;
+  transition:border-color .2s;
+}
+#input-wrap:focus-within{border-color:rgba(76,175,80,.5)}
+textarea{
+  flex:1;background:transparent;border:none;outline:none;
+  color:var(--text);font-family:inherit;font-size:14px;
+  resize:none;max-height:120px;line-height:1.5;
+}
+textarea::placeholder{color:var(--text3)}
+#send{
+  width:38px;height:38px;border-radius:var(--radius-sm);
+  border:none;background:linear-gradient(135deg,#2e7d32,#4caf50);
+  color:#fff;font-size:18px;cursor:pointer;
+  flex-shrink:0;transition:opacity .15s;
+  display:flex;align-items:center;justify-content:center;
+}
+#send:hover{opacity:.85}
+#send:disabled{background:var(--border);cursor:not-allowed;opacity:1}
+.footer-row{
+  display:flex;justify-content:space-between;
+  margin-top:7px;padding:0 3px;
+}
+.footer-row span{font-size:11px;color:var(--text3)}
+
+/* Toast */
+#toast{
+  position:fixed;bottom:85px;left:50%;
+  transform:translateX(-50%) translateY(16px);
+  background:var(--surface2);border:1px solid var(--border);
+  padding:9px 18px;border-radius:var(--radius-sm);
+  font-size:13px;color:var(--text);
+  opacity:0;transition:all .3s;pointer-events:none;z-index:99;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:.25;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <div class="logo">🌾</div>
+    <div class="header-text">
+      <h1>Kilimo Bot</h1>
+      <p><span class="online"></span>Mtaalamu wa Kilimo · Tayari</p>
+    </div>
+    <div class="header-right">
+      <button class="hdr-btn" onclick="clearChat()">🗑 Futa</button>
+    </div>
+  </header>
+
+  <div id="topics">
+    <button class="topic-chip" onclick="quickAsk('Mazao ya mahindi — magonjwa na tiba')">🌽 Mahindi</button>
+    <button class="topic-chip" onclick="quickAsk('Mpunga — jinsi ya kupanda vizuri')">🌾 Mpunga</button>
+    <button class="topic-chip" onclick="quickAsk('Mbolea bora kwa mboga')">🌿 Mbolea</button>
+    <button class="topic-chip" onclick="quickAsk('Wadudu wa mazao — jinsi ya kuua')">🐛 Wadudu</button>
+    <button class="topic-chip" onclick="quickAsk('Kuku — magonjwa na chanjo')">🐔 Mifugo</button>
+    <button class="topic-chip" onclick="quickAsk('Umwagiliaji wa kisasa')">💧 Umwagiliaji</button>
+    <button class="topic-chip" onclick="quickAsk('Nyanya — kupanda na kutunza')">🍅 Nyanya</button>
+    
+  </div>
+
+  <div id="messages">
+    <div id="welcome">
+      <div class="welcome-icon">🌱</div>
+      <h2>Habari! Mimi ni Kilimo Bot</h2>
+      <p>Niulize chochote kuhusu kilimo — mazao, mbolea, magonjwa, mifugo. Najibu kwa Kiswahili na English.</p>
+      <div class="suggest-grid">
+        <button class="sug" onclick="useSug(this)"><span>🌽</span>Mahindi yangu yana madoa meupe — ni ugonjwa gani?</button>
+        <button class="sug" onclick="useSug(this)"><span>💧</span>Ninaweza kupanda nini wakati wa kiangazi?</button>
+        <button class="sug" onclick="useSug(this)"><span>🐄</span>Ng'ombe wangu hawali vizuri — nifanye nini?</button>
+        
+      </div>
+    </div>
+  </div>
+
+  <div id="input-area">
+    <div id="input-wrap">
+      <textarea
+        id="user-input"
+        rows="1"
+        placeholder="Uliza swali lako la kilimo hapa... / Ask your farming question here..."
+        onkeydown="handleKey(event)"
+        oninput="autoResize(this)"
+      ></textarea>
+      <button id="send" onclick="sendMessage()">➤</button>
+    </div>
+    <div class="footer-row">
+      <span>Enter = tuma &nbsp;·&nbsp; Shift+Enter = mstari mpya</span>
+      <span id="char-count">0</span>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+let isLoading = false;
+
+function autoResize(el){
+  el.style.height='auto';
+  el.style.height=Math.min(el.scrollHeight,120)+'px';
+  document.getElementById('char-count').textContent=el.value.length;
+}
+
+function handleKey(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}
+}
+
+function useSug(btn){
+  const txt = btn.textContent.replace(/^[^\w\u00C0-\u024F]+/,'').trim();
+  document.getElementById('user-input').value=txt;
+  autoResize(document.getElementById('user-input'));
+  sendMessage();
+}
+
+function quickAsk(text){
+  document.getElementById('user-input').value=text;
+  sendMessage();
+}
+
+function removeWelcome(){
+  const w=document.getElementById('welcome');
+  if(w) w.remove();
+}
+
+function addBubble(role,html){
+  removeWelcome();
+  const msgs=document.getElementById('messages');
+  const row=document.createElement('div');
+  row.className='msg-row '+role;
+  const av=document.createElement('div');
+  av.className='avatar '+role;
+  av.textContent=role==='ai'?'🌾':'🧑';
+  const bub=document.createElement('div');
+  bub.className='bubble '+role;
+  bub.innerHTML=html;
+  row.appendChild(av);row.appendChild(bub);
+  msgs.appendChild(row);
+  msgs.scrollTop=msgs.scrollHeight;
+  return bub;
+}
+
+function formatReply(text){
+  // Escape HTML kwanza
+  let t=text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  // Bold **...**
+  t=t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  // Italic *...*
+  t=t.replace(/\*(.*?)\*/g,'<em>$1</em>');
+  // Numbered steps — panga vizuri
+  t=t.replace(/^(\d+)\.\s+(.+)$/gm,'<div class="step"><strong>$1.</strong> $2</div>');
+  // Mistari mipya
+  t=t.replace(/\n/g,'<br/>');
+  return t;
+}
+
+function showTyping(){
+  removeWelcome();
+  const msgs=document.getElementById('messages');
+  const row=document.createElement('div');
+  row.id='typing-row';row.className='msg-row ai';
+  row.innerHTML=`<div class="avatar ai">🌾</div><div class="bubble ai"><div class="typing"><span></span><span></span><span></span></div></div>`;
+  msgs.appendChild(row);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+function removeTyping(){
+  const t=document.getElementById('typing-row');
+  if(t)t.remove();
+}
+
+async function sendMessage(){
+  if(isLoading)return;
+  const inp=document.getElementById('user-input');
+  const text=inp.value.trim();
+  if(!text)return;
+
+  addBubble('user',text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));
+  inp.value='';inp.style.height='auto';
+  document.getElementById('char-count').textContent='0';
+
+  isLoading=true;
+  document.getElementById('send').disabled=true;
+  showTyping();
+
+  try{
+    const res=await fetch('/chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:text})
+    });
+    const data=await res.json();
+    removeTyping();
+    if(data.error){
+      addBubble('ai','⚠️ Hitilafu: '+data.error);
+    } else {
+      addBubble('ai',formatReply(data.reply));
+    }
+  } catch(err){
+    removeTyping();
+    addBubble('ai','⚠️ Hitilafu ya mtandao. Angalia terminal yako.');
+  }
+
+  isLoading=false;
+  document.getElementById('send').disabled=false;
+  inp.focus();
+}
+
+async function clearChat(){
+  await fetch('/clear',{method:'POST'});
+  const msgs=document.getElementById('messages');
+  msgs.innerHTML=`
+    <div id="welcome" style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:14px;text-align:center;padding:32px 20px;">
+      <div style="font-size:52px">🌱</div>
+      <h2 style="font-size:20px;font-weight:700">Mazungumzo yamefutwa!</h2>
+      <p style="font-size:14px;color:var(--text3)">Anza mazungumzo mapya...</p>
+    </div>`;
+  showToast('🗑 Mazungumzo yamefutwa');
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+</script>
+</body>
+</html>
