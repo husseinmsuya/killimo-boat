@@ -3,7 +3,10 @@ from groq import Groq
 from dotenv import load_dotenv
 from services.farmer_profile import build_farmer_context, clear_profile, get_profile
 from services.weather import get_weather, build_weather_farming_context
-from rag.rag_system import search, format_context
+from rag.rag_system import search, format_context, build_chunks
+
+# Jenga RAG chunks wakati server inaanza (kama hazipo)
+build_chunks()
 import os, datetime
 
 load_dotenv()
@@ -151,7 +154,6 @@ HALI YA HEWA — KANUNI MUHIMU:
 MIPAKA:
 - Ukiulizwa swali LOLOTE lisilo la kilimo, jibu: "Samahani ndugu, mimi ni mtaalamu wa kilimo tu. Una swali la kilimo? Niko hapa! 🌾"
 - Hata kama anasisitiza — KATAA kwa upole lakini imara
--miongoni mwa taarifa sizizo za kilimo ni kama sanaa,utalii,miundombinu,michezo na nyinginezo ambazo hasiusian na mazao wala mifugo
 - Usitoe dawa au ushauri wa matibabu ya binadamu kamwe
 """
 
@@ -250,7 +252,7 @@ def chat():
 
     try:
         response = client.chat.completions.create(
-            model="llama-3.2-11b-vision-preview" if image_data else "llama-3.3-70b-versatile",
+            model="meta-llama/llama-4-scout-17b-16e-instruct" if image_data else "llama-3.3-70b-versatile",
             max_tokens=1024,
             temperature=0.7,
             messages=[
@@ -281,4 +283,5 @@ def clear():
     return jsonify({"status": "ok"})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.getenv("PORT", 7860))
+    app.run(host="0.0.0.0", port=port, debug=False)
