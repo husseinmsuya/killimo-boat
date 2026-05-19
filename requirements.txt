@@ -1,9 +1,9 @@
 flask
 groq
 python-dotenv
-langchain
-langchain-community
-faiss-cpu
-langchain-huggingface
+requests
+pymupdf
+chromadb
 sentence-transformers
 gunicorn
+psycopg2-binary

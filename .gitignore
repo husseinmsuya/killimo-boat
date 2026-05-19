@@ -1,12 +1,28 @@
-# environment
-env/
-venv/
+# Environment
 .env
+*.env
 
-# Python cache
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
+venv/
+env/
+.venv/
 
+# Database
+kilimo.db
+*.db
 
-# system files
-.DS_Store
+# ChromaDB — itajengwa upya Render
+data/chromadb/
+
+# PDFs — zipakuliwe upya Render
+data/pdfs/
+
+# VS Code
+.vscode/
+
+# Windows
+Thumbs.db
+desktop.ini

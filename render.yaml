@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: kilimo-bot
+    env: python
+    buildCommand: pip install -r requirements.txt && python rag/rag_system.py --build
+    startCommand: gunicorn app:app
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: OPENWEATHER_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: kilimo-db
+          property: connectionString
+      - key: PYTHON_VERSION
+        value: 3.11.0
+
+databases:
+  - name: kilimo-db
+    plan: free
