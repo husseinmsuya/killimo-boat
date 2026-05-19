@@ -3,7 +3,5 @@ groq
 python-dotenv
 requests
 pymupdf
-chromadb
-sentence-transformers
 gunicorn
 psycopg2-binary
